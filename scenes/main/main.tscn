@@ -1,16 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://bgw33voqe3ads"]
+[gd_scene load_steps=12 format=3 uid="uid://bgw33voqe3ads"]
 
 [ext_resource type="PackedScene" path="res://scenes/game_objects/game_camera/game_camera.tscn" id="1_5sjeh"]
 [ext_resource type="PackedScene" path="res://scenes/managers/enemy_manager.tscn" id="1_ab4au"]
 [ext_resource type="TileSet" uid="uid://wvw4s1frm1ge" path="res://resources/tileset.tres" id="1_aokih"]
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_kfv67"]
 [ext_resource type="PackedScene" uid="uid://d2w257pvorwal" path="res://scenes/game_objects/player/player.tscn" id="1_uy6fi"]
 [ext_resource type="PackedScene" uid="uid://chx6sm6g0uj5k" path="res://scenes/UI/arena_time_ui.tscn" id="1_xexc8"]
+[ext_resource type="PackedScene" uid="uid://budfu8sllhfxy" path="res://scenes/UI/end_screen.tscn" id="2_4xws0"]
 [ext_resource type="PackedScene" uid="uid://brumsixukhj04" path="res://scenes/UI/experience_bar.tscn" id="2_5444m"]
 [ext_resource type="PackedScene" uid="uid://c0jej6b3jgcaw" path="res://scenes/managers/experience_manager.tscn" id="2_eb60d"]
-[ext_resource type="PackedScene" uid="uid://cjvwqq88vmvrv" path="res://scenes/managers/area_time_manager.tscn" id="2_xbfhm"]
+[ext_resource type="PackedScene" uid="uid://pi68ytohxu8e" path="res://scenes/managers/area_time_manager.tscn" id="2_xbfhm"]
 [ext_resource type="PackedScene" uid="uid://b251w71uu38px" path="res://scenes/managers/upgrade_manager.tscn" id="4_kfhnb"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_kfv67")
+end_screen_scene = ExtResource("2_4xws0")
 
 [node name="ArenaTimeUI" parent="." node_paths=PackedStringArray("arena_time_manager") instance=ExtResource("1_xexc8")]
 arena_time_manager = NodePath("../AreaTimeManager")
@@ -38,6 +42,7 @@ layer_0/tile_data = PackedInt32Array(65537, 0, 4, 65538, 65536, 4, 65539, 0, 4, 
 y_sort_enabled = true
 
 [node name="Player" parent="Entities" instance=ExtResource("1_uy6fi")]
+unique_name_in_owner = true
 position = Vector2(639, 405)
 collision_layer = 0
 
