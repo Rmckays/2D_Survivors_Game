@@ -1,9 +1,95 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2w257pvorwal"]
+[gd_scene load_steps=13 format=3 uid="uid://d2w257pvorwal"]
 
 [ext_resource type="Texture2D" uid="uid://dtrbsvatyqg3" path="res://scenes/game_objects/player/player.png" id="1_2vkes"]
 [ext_resource type="Script" path="res://scenes/game_objects/player/player.gd" id="1_s3fjq"]
 [ext_resource type="PackedScene" uid="uid://0slnby3wvunv" path="res://scenes/abilities/sword_ability_controller/sword_ability_controller.tscn" id="2_poor0"]
 [ext_resource type="PackedScene" uid="uid://bsc263hsop4ql" path="res://scenes/components/health_component.tscn" id="2_xdyei"]
+
+[sub_resource type="Animation" id="Animation_2yjkh"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2.08165e-12, -4), Vector2(1.97756e-08, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.261799, 0.261799, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"transitions": PackedFloat32Array(0.757859, 2.63901, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1.1), Vector2(1.5, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_h02j1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5j741"]
+_data = {
+"RESET": SubResource("Animation_h02j1"),
+"walk": SubResource("Animation_2yjkh")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kftp7"]
 bg_color = Color(0.247059, 0.14902, 0.192157, 1)
@@ -28,6 +114,11 @@ radius = 5.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_s3fjq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5j741")
+}
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_xdyei")]
 
@@ -70,7 +161,9 @@ collision_mask = 8
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_mommc")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("1_2vkes")
 offset = Vector2(2.08165e-12, -8)
 flip_h = true
