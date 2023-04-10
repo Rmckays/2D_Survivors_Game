@@ -19,7 +19,7 @@ func increment_experience(number: float):
 		current_level += 1
 		target_experience += TARGET_EXPERIENCE_GROWTH
 		current_experience = 0
-		experience_updated.emit()
+		experience_updated.emit(current_experience, target_experience)
 		level_up.emit(current_level)
 
 

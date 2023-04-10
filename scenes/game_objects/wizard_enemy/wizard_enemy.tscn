@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c46tvbuicnp7d"]
+[gd_scene load_steps=16 format=3 uid="uid://c46tvbuicnp7d"]
 
 [ext_resource type="Script" path="res://scenes/game_objects/wizard_enemy/wizard_enemy.gd" id="1_3ca2u"]
 [ext_resource type="Texture2D" uid="uid://d22efgp5yrbh3" path="res://scenes/game_objects/wizard_enemy/wizard_enemy.png" id="1_rp47q"]
@@ -7,6 +7,47 @@
 [ext_resource type="PackedScene" uid="uid://dpaeiydmufo58" path="res://scenes/components/velocity_component.tscn" id="3_5vo03"]
 [ext_resource type="PackedScene" uid="uid://ci85v2tvikg8u" path="res://scenes/components/hurt_box_component.tscn" id="4_pb4fj"]
 [ext_resource type="PackedScene" uid="uid://cbthcse4qmm3c" path="res://scenes/components/vial_drop_component.tscn" id="5_a5784"]
+[ext_resource type="PackedScene" uid="uid://duqnkoan6k1oq" path="res://scenes/components/hit_flash_component.tscn" id="6_xwa1a"]
+[ext_resource type="Shader" path="res://scenes/shaders/hit_flash_component.gdshader" id="7_aiuah"]
+
+[sub_resource type="Animation" id="Animation_sasu7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_q5duj"]
 resource_name = "walk"
@@ -67,50 +108,16 @@ tracks/3/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_sasu7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Visuals/Sprite2D:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h4ljk"]
 _data = {
 "RESET": SubResource("Animation_sasu7"),
 "walk": SubResource("Animation_q5duj")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s02db"]
+resource_local_to_scene = true
+shader = ExtResource("7_aiuah")
+shader_parameter/lerp_percent = null
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e2ndw"]
 radius = 8.0
@@ -142,6 +149,11 @@ acceleration = 20.0
 
 [node name="VialDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_a5784")]
 health_component = NodePath("../HealthComponent")
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("6_xwa1a")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Visuals/Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_s02db")
 
 [node name="Visuals" type="Node2D" parent="."]
 
